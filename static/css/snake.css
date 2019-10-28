@@ -41,18 +41,11 @@ body {
     background-color: #368dd6;
 }
 
-#game td.red {
-    background-color: #f16969;
-}
+#game td.red { background-color: rgba(255, 0, 0, 0.8); }
+#game td.green { background-color: rgba(0, 255, 0, 0.8); }
+#game td.yellow { background-color: rgba(255, 255, 0, 0.8); }
+#game td.purple { background-color: rgba(140, 0, 255, 0.8); }
+#game td.orange { background-color: rgba(255, 100, 0, 0.8); }
+#game td.blue { background-color: rgba(0, 0, 255, 0.8); }
 
-#game td.purple {
-    background-color: #787fcf;
-}
-
-#game td.orange {
-    background-color: #ed9d1a;
-}
-
-#game td.x {
-    background-color: #aaa;
-}
+#game td.reserved { background-color: rgba(0, 0, 0, 0.5); }
