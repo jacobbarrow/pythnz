@@ -15,7 +15,6 @@ class Snake():
         self.score = 0
         self.is_ai = is_ai
         self.direction = EAST
-
     
         self.coords = []
         self.reserved_coords = []

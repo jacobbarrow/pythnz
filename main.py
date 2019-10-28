@@ -17,7 +17,7 @@ socketio = SocketIO(app)
 
 
 r = Room(width=20, height=20)
-user_snake = Snake(10, 10, 'orange', 'User', r, is_ai=False)
+user_snake = Snake('orange', 'User', is_ai=False)
 
 
 @app.route('/')

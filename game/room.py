@@ -66,6 +66,7 @@ class Room():
         print('+' + '--' * (self.width-1) + '-+')
 
     def addSnake(self, snake):
+        snake.room = self
         self.snakes.append(snake)
         snake.generate()
 
