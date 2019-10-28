@@ -77,4 +77,4 @@ if __name__ == '__main__':
         game_loop.start()
 
     r.reset()
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host='0.0.0.0')
