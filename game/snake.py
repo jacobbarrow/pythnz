@@ -25,7 +25,6 @@ class Snake():
         self.ticks_until_alive = 5
         self.direction = EAST
 
-        slot = False
         slot_found = False
         while not slot_found:
             y = random.randint(0, self.room.height)
@@ -126,9 +125,11 @@ class Snake():
         return self.direction
 
     def setDirection(self, direction):
-        # Make sure the snake can't go back on itself
-        if not self.direction == direction+2 and not self.direction == direction-2:
-            self.direction = direction
+        # Don't move the snake if it's still spawning
+        if self.ticks_until_alive == -1:
+            # Make sure the snake can't go back on itself
+            if not self.direction == direction+2 and not self.direction == direction-2:
+                self.direction = direction
 
     def kill(self):
         for coord in self.coords:

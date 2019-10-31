@@ -37,7 +37,6 @@ def load():
     r.addSnake(Snake('purple', 'Ellen')) 
     r.addSnake(Snake('blue', 'Bob'))
     r.addSnake(Snake('green', 'Chris'))
-    r.addSnake(Snake('yellow', 'Amy'))
     r.addSnake(user_snake)
     return 'done'
 
