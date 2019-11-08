@@ -22,7 +22,7 @@ user_snake = Snake('orange', 'User', is_ai=False)
 
 @app.route('/')
 def index():
-    return render_template('snake.html')
+    return render_template('snake.html', room=r)
 
 @app.route('/set/<float:speed>')
 def set_speed(speed):
@@ -65,7 +65,7 @@ def handle_message():
     socketio.start_background_task(target=send_room_state)
     socketio.start_background_task(target=send_scores)
 
-@socketio.on('move_snake')
+@socketio.on('change_direction')
 def move_snake(direction):
     global user_snake
     user_snake.setDirection(direction)

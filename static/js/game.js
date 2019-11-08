@@ -18,13 +18,11 @@ socket.on('scores_changed', function(data) {
         score_el = document.createElement('li');
         score_el.innerHTML = snake.name + ': ' + snake.score;
         scores_el.appendChild(score_el);
-        
     }
-
 });
 
 function changeDirection(direction) {
-    socket.emit('move_snake', direction);
+    socket.emit('change_direction', direction);
 }
 
 document.onkeydown = function(event) {
