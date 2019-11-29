@@ -2,15 +2,18 @@ import os, time, random
 from .snake import Snake
 
 FOOD = 'food'
+COLOURS = ['red', 'blue', 'purple', 'yellow', 'green']
+NAMES = ['AI Alice', 'AI Bob', 'AI Catherine', 'AI Dylan', 'AI Eliza']
 class Room():
-    def __init__(self, width, height):
+    def __init__(self, width=20, height=20, speed=0.15, name=''):
         self.snakes = []
         self.height = height
         self.width = width
         self.board = [[' ' for _ in range(width)] for _ in range(height)]
         self.addFood()
         self.is_finished = False
-        self.speed = 0.15
+        self.speed = speed
+        self.name = name
 
     def getRow(self, index):
         return self.board[index]
@@ -67,8 +70,15 @@ class Room():
 
     def addSnake(self, snake):
         snake.room = self
+        snake.colour = COLOURS[len(self.snakes)]
         self.snakes.append(snake)
         snake.generate()
+
+    def removeSnake(self, sid):
+        for snake in self.snakes:
+            if snake.sid == sid:
+                snake.kill(regenerate=False)
+                self.snakes.remove(snake)
 
     def step(self):
         for snake in self.snakes:
@@ -76,10 +86,11 @@ class Room():
                 if snake.is_ai:
                     snake.setDirection(snake.predictDirection())
                 snake.move()
-            else:
+            elif snake.ticks_until_alive > -1:
                 if snake.ticks_until_alive == 0:
                     snake.unreserve()
                 snake.ticks_until_alive -=1
+
            
         if self.hasNoFood():
             self.addFood()
@@ -90,33 +101,8 @@ class Room():
             self.step()
             time.sleep(self.speed)
 
-    def reset(self):
+    def reset(self, num_ais=3):
         self.snakes = []
+        for i in range(num_ais):
+            self.addSnake(Snake(NAMES[i]))
         self.board = [[' ' for _ in range(self.width)] for _ in range(self.height)]
-
-        
-
-if __name__ == '__main__':
-    r = Room(width=34, height=15)
-
-    r.addSnake(Snake('a', 'Amy'))
-    r.addSnake(Snake('b', 'Bob'))
-    r.addSnake(Snake('c', 'Charlie'))
-    r.addSnake(Snake('d', 'David'))
-    r.addSnake(Snake('e', 'Ellen'))
-
-    while not r.is_finished:
-        # Clear the old frame
-        os.system('clear')
-        # Display the new one
-        r.show()
-
-        snakes_alive = 0
-        r.step()
-
-        print('Live Snakes:')
-        for snake in r.snakes:
-            print(snake.name + ': ' + str(snake.score))
-
-
-        time.sleep(.1) # Any lower than .15 and it gets a bit tempermental

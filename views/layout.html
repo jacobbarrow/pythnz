@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/snake.css') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Nova+Mono&display=swap" rel="stylesheet">
+
+    <title>Pythonz</title>
+</head>
+<body>
+    <header>
+        <h1><a href="{{ url_for('show_rooms') }}">pythons</a></h1>
+        <div class="right">
+            {% if is_logged_in %}
+            <a href="{{ url_for('signout') }}" class="right">sign out</a>
+            {% else %}
+            <a href="{{ url_for('signin') }}" class="right">sign in</a>
+            <a href="{{ url_for('signup') }}" class="right">sign up</a>
+            {% endif %}
+        </div>
+    </header>
+    <main>
+       {% block main %}{% endblock %}
+    </main>
+</body>
+</html>

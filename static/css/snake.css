@@ -2,18 +2,6 @@
     --cell-size: 25px;
 }
 
-main {
-    max-width: 600px;
-    margin: 50px auto;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    background: #8bb47a;
-}
-
 #game {
     border: 3px #333 solid;
     margin: 0 auto;

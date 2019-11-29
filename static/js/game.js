@@ -1,7 +1,33 @@
 var socket = io();
 
+// getCookie func taken verbatim from https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+}
+
+user_id = getCookie('uid')
+console.log(user_id)
+
 let game_el = document.getElementById('game');
 let scores_el = document.getElementById('scores');
+
+socket.on('connected', function() {
+    socket.emit('join', 
+        {'room_id': room_id, 'user_id': user_id}
+        )
+})
 
 socket.on('board_changed', function(data) {
     for(var y=0, row; row = game_el.rows[y]; y++) {
@@ -22,7 +48,7 @@ socket.on('scores_changed', function(data) {
 });
 
 function changeDirection(direction) {
-    socket.emit('change_direction', direction);
+    socket.emit('change_direction', {'direction': direction, 'user_id': user_id});
 }
 
 document.onkeydown = function(event) {

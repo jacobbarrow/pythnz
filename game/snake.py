@@ -1,4 +1,5 @@
 import random
+from . import user
 
 NORTH = 1
 EAST = 2
@@ -8,18 +9,24 @@ DIRECTIONS = [NORTH, EAST, SOUTH, WEST]
 
 FOOD = 'food'
 class Snake():
-    def __init__(self, colour, name, is_ai=True):
+    def __init__(self, name, is_ai=True, sid=False, uid=False):
         self.room = None
-        self.colour = colour
+        self.colour = None
         self.name = name
         self.score = 0
         self.is_ai = is_ai
         self.direction = EAST
+        self.sid = sid
+        self.uid = uid
+        self.highest_score = 0
     
         self.coords = []
         self.reserved_coords = []
 
         self.uninterrupted_distance = 0
+
+        if self.uid is not False:
+            self.highest_score = user.findById(self.uid)[3]
 
     def generate(self):
         self.ticks_until_alive = 5
@@ -64,7 +71,9 @@ class Snake():
         return [x,y ]
 
     def move(self):
-        if self.ticks_until_alive == -1:
+        if not self.ticks_until_alive == -1:
+            return False
+        else:
             next_cell = self.getNextCell()
 
             if self.room.cellIsFree(next_cell):
@@ -73,6 +82,11 @@ class Snake():
                     del self.coords[-1]
                 else:
                     self.score += 1
+                    if self.uid:
+                        user.incrementTotalScore(self.uid, 1)
+                        if self.score > self.highest_score:
+                            user.setHighestScore(self.uid, self.score)
+                            self.highest_score = self.score
                     self.room.addFood()
 
                 self.room.fillCell(next_cell, self.colour)
@@ -81,8 +95,6 @@ class Snake():
             else:
                 self.kill()
                 return False
-        else:
-            return False
     
     def predictDirection(self):
         # If an adjacent cell has food, head towards it
@@ -131,10 +143,20 @@ class Snake():
             if not self.direction == direction+2 and not self.direction == direction-2:
                 self.direction = direction
 
-    def kill(self):
+    def kill(self, regenerate=True):
+        self.score = 0
         for coord in self.coords:
             self.room.fillCell(coord, ' ')
-        self.generate()
+        for coord in self.reserved_coords:
+            self.room.fillCell(coord, ' ')
+
+        if regenerate:
+            self.generate()
+        else:
+            self.coords = []
+            self.reserved_coords = []  
+            self.ticks_until_alive = -2
+
 
 
     def __str__(self):

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block main %}
+<h2>Rooms</h2>
+{% for id, room in rooms.items() %}
+<a href="/rooms/{{id}}">
+<div class="room {{ 'full' if room.snakes |length == 5}}">
+    <span class="capacity">{{ room.snakes |length }}/5</span>
+    <h2>{{ room.name }}</h2>
+    <span class="difficulty">
+        {% for i in range(((1-room.speed)*10-6) |int) %}🟊{% endfor %}
+    </span>
+</div>
+</a>
+{% endfor %}
+<h2>Leaderboard</h2>
+<table>
+    <thead>
+        <th>User</th>
+        <th>Highest Score</th>
+        <th>Total Score</th>
+    </thead>
+    {% for user in leaderboard %}
+    <tr>
+        <td>{{ user[1] }}</td>
+        <td>{{ user[3] }}</td>
+        <td>{{ user[4] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

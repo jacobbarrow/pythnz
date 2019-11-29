@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block main %}
+<h2>sign {{ action }}</h2>
+<form action="" method="POST">
+    <div class="input_wrap">
+        <label for="username">nickname</label>
+        <input name="username" placeholder="nickname" required>
+    </div>
+    <div class="input_wrap">
+        <label for="password">password</label>
+        <input name="password" placeholder="password" type="password" required>
+    </div>
+    <input type="submit" value="sign {{ action }}">
+    <p>{{ 'Already' if action == 'up' else 'Don\'t' }} have an account? <a href="{{ url_for('sign{0}'.format('up' if action == 'in' else 'in')) }}">Sign {{ 'up' if action == 'in' else 'in' }}</a></p>
+    <p>{{ error }}</p>
+</form>
+
+
+{% endblock %}

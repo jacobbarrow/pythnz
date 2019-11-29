@@ -1,0 +1,72 @@
+html, body, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 1.4em;
+    font-family: 'Nova Mono', monospace;
+}
+
+body {
+    background: #83B799;
+    font-size: 1.4em;
+    color: #272324
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+
+header .right {
+    display: flex;
+}
+
+header .right > * {
+    margin-left: 15px;
+}
+
+main {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    font-weight: 700;
+}
+
+.room {
+    display: flex;
+    align-items: center;
+    background: #E4D8B4;
+    margin: 15px 0;
+    padding: 15px;
+    color: #E86F68;
+    border-radius: 10px;
+}
+
+.room .capacity {
+    margin-right: 15px;
+}
+
+.room .difficulty {
+    font-size: 2em;
+    margin-left: auto;
+    color: #C2B28F;
+}
+
+.room.full {
+    background: repeating-linear-gradient(
+    45deg,
+    #C2B28F,
+    #C2B28F 5px,
+    #E4D8B4 5px,
+    #E4D8B4 10px
+    );
+}
