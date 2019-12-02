@@ -1,7 +1,6 @@
 import sqlite3
 import random
 import string
-import config
 
 db = sqlite3.connect('../db.sqlite')
 cursor = db.cursor()
@@ -26,7 +25,7 @@ def create(name, password):
     db.commit()
 
 def findAll():
-    cursor.execute('SELECT * FROM users')
+    cursor.execute('SELECT * FROM users ORDER BY total_score desc')
     return cursor.fetchall()
 
 def findById(uid):

@@ -1,16 +1,22 @@
 {% extends 'layout.html' %}
 {% block main %}
-        <table id="game" border="0">
-            {% for row in range(room.height) %}
-                <tr>
-                {% for cell in range(room.width) %}
-                    <td></td>
-                {% endfor %}
-                </tr>
+    <h2>{{ room.name }}</h2>
+    {% if is_logged_in %}
+    <h3>you are <span id="status">spectating</span></h3>
+    {% else %}
+    <h3>spectating</h3>
+    {% endif %}
+    <table id="game" border="0">
+        {% for row in range(room.height) %}
+            <tr>
+            {% for cell in range(room.width) %}
+                <td></td>
             {% endfor %}
-        </table>
-        <ol id="scores">
-        </ol>
+            </tr>
+        {% endfor %}
+    </table>
+    <ol id="scores">
+    </ol>
 
     </main>
     <script>

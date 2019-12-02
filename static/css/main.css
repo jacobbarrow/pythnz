@@ -32,7 +32,7 @@ header .right > * {
 }
 
 main {
-    max-width: 700px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -69,4 +69,9 @@ h2 {
     #E4D8B4 5px,
     #E4D8B4 10px
     );
+}
+
+.leaderboard {
+    width: 100%;
+    text-align: center;
 }

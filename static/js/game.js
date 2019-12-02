@@ -37,6 +37,10 @@ socket.on('board_changed', function(data) {
     }
 });
 
+socket.on('status_update', function(data) {
+    document.getElementById('status').innerHTML = data;
+});
+
 socket.on('scores_changed', function(data) {
     // Updates scores
     scores_el.innerHTML = "";
@@ -52,25 +56,28 @@ function changeDirection(direction) {
 }
 
 document.onkeydown = function(event) {
-    charCode = event.keyCode;
-    // North
-    if (charCode == 38 || charCode == 87){
-        event.preventDefault();
-        changeDirection(1)
+    if (user_id != "") {
+        charCode = event.keyCode;
+        // North
+        if (charCode == 38 || charCode == 87){
+            event.preventDefault();
+            changeDirection(1)
+        }
+        // East
+        else if (charCode == 39 || charCode == 68){
+            event.preventDefault();
+            changeDirection(2)
+        }
+        // South
+        else if (charCode == 40 || charCode == 83){
+            event.preventDefault();
+            changeDirection(3)
+        }
+        // West
+        else if (charCode == 37 || charCode == 65){
+            event.preventDefault();
+            changeDirection(4)
+        }
     }
-    // East
-    else if (charCode == 39 || charCode == 68){
-        event.preventDefault();
-        changeDirection(2)
-    }
-    // South
-    else if (charCode == 40 || charCode == 83){
-        event.preventDefault();
-        changeDirection(3)
-    }
-    // West
-    else if (charCode == 37 || charCode == 65){
-        event.preventDefault();
-        changeDirection(4)
-    }
+
 };

@@ -13,6 +13,7 @@ from game import user
 
 thread_lock = None
 
+
 app = Flask(__name__, template_folder="views")
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
@@ -99,28 +100,31 @@ def connected():
 def disconnect():
     for room in rooms():
          if room in game_rooms:
-             game_rooms[room].removeSnake(request.sid)
-             del user_snakes[request.sid]
-    print('client disconnected')
+            try:
+                game_rooms[room].removeSnake(request.sid)
+                del user_snakes[request.sid]
+            except KeyError: 
+                pass
 
 @socketio.on('join')
 def on_join(data):
     global thread_lock
 
     this_user = user.findById(data['user_id'])
-    if this_user is not None:
-        user_ids[request.sid] = data['user_id']
+    room_id = data['room_id']
+    room = game_rooms[room_id]
 
-        room_id = data['room_id']
-        join_room(room_id)
-        room = game_rooms[room_id]
+    join_room(room_id)
+    if this_user is not None and len(room.snakes) < 5:
+        user_ids[request.sid] = data['user_id']        
         
         user_snakes[request.sid] = Snake(name=this_user[1], is_ai=False, sid=request.sid, uid=data['user_id'])
         
         room.removeSnake(request.sid)
         room.addSnake(user_snakes[request.sid])
+        socketio.emit('status_update', user_snakes[request.sid].colour)
     else:
-        print('Unknown User!')
+        socketio.emit('status_update', 'spectating')
 
     def send_room_state():
         while True:
@@ -155,17 +159,12 @@ def move_snake(data):
     user_snakes[request.sid].setDirection(data['direction'])
 
 
-@socketio.on('leave')
-def on_leave(data):
-    leave_room(data['room'])
-    user_snakes[request.sid]
-
 with app.test_request_context():
         for room in game_rooms.values():
             game_loop = AppContextThread(target=room.loop)
 
             game_loop.start()
-            room.reset(num_ais=random.randint(1,4))
+            room.reset(num_ais=random.randint(3,5))
 
 if __name__ == '__main__':
     socketio.run(app, debug=False, host='0.0.0.0')
