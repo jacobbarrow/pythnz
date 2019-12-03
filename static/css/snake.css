@@ -33,3 +33,11 @@
 #game td.blue { background-color: rgba(0, 0, 255, 0.6); }
 
 #game td.reserved { background-color: rgba(0, 0, 0, 0.6); }
+
+/** Scores **/
+#scores .red { color: rgba(255, 0, 0, 0.6); }
+#scores .green { color: rgba(0, 255, 0, 0.6); }
+#scores .yellow { color: rgba(255, 255, 0, 0.6); }
+#scores .purple { color: rgba(140, 0, 255, 0.6); }
+#scores .orange { color: rgba(255, 100, 0, 0.6); }
+#scores .blue { color: rgba(0, 0, 255, 0.6); }

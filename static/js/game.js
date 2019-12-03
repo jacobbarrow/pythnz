@@ -47,6 +47,7 @@ socket.on('scores_changed', function(data) {
     for(var i=0, snake; snake=data['snakes'][i]; i++){
         score_el = document.createElement('li');
         score_el.innerHTML = snake.name + ': ' + snake.score;
+        score_el.className = snake.colour
         scores_el.appendChild(score_el);
     }
 });
